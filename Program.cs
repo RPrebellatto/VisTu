@@ -3,6 +3,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<Context>();
+var connectionString = builder.Configuration.GetConnectionString(name: "DefaultConnection");
+builder.Services.AddDbContext<Context>(options =>
+{
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
