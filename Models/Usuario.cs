@@ -9,14 +9,14 @@
         [EmailAddress]
         [Required(ErrorMessage = "Favor informar um email válido")]
         public string Email { get; set; }
-        [Phone]
-        public int Celular { get; set; }  
+        public int Celular { get; set; }
+        public int SetorId { get; set; }
         public Setor Setor { get; set; }
         [StringLength(maximumLength: 128, MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Favor informar a senha")]
         public string Senha { get; set; }
-        public string Salt { get; set; }
+        public string? Salt { get; set; }
 
     }
 }
