@@ -48,7 +48,7 @@ namespace VisTu.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
-            ViewData["SetorId"] = new SelectList(_context.Setores, "Id", "Email");
+            ViewData["SetorId"] = new SelectList(_context.Setores, "Id", "NomeSetor");
             return View();
         }
 
@@ -73,7 +73,7 @@ namespace VisTu.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
            // }
-            ViewData["SetorId"] = new SelectList(_context.Setores, "Id", "Email", usuario.SetorId);
+            ViewData["SetorId"] = new SelectList(_context.Setores, "Id", "NomeSetor", usuario.SetorId);
             return View(usuario);
         }
 
@@ -90,7 +90,7 @@ namespace VisTu.Controllers
             {
                 return NotFound();
             }
-            ViewData["SetorId"] = new SelectList(_context.Setores, "Id", "Email", usuario.SetorId);
+            ViewData["SetorId"] = new SelectList(_context.Setores, "Id", "NomeSetor", usuario.SetorId);
             return View(usuario);
         }
 
@@ -126,7 +126,7 @@ namespace VisTu.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SetorId"] = new SelectList(_context.Setores, "Id", "Email", usuario.SetorId);
+            ViewData["SetorId"] = new SelectList(_context.Setores, "Id", "NomeSetor", usuario.SetorId);
             return View(usuario);
         }
 

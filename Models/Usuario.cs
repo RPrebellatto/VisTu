@@ -10,6 +10,7 @@
         [Required(ErrorMessage = "Favor informar um email válido")]
         public string Email { get; set; }
         public int Celular { get; set; }
+        [Display(Name ="Setor")]
         public int SetorId { get; set; }
         public Setor Setor { get; set; }
         [StringLength(maximumLength: 128, MinimumLength = 3)]
