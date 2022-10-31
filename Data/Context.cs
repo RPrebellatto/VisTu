@@ -25,5 +25,7 @@ namespace VisTu.Data
         public DbSet<Usuario>? Usuarios { get; set; }
         public DbSet<Tubulacao> Tubulacoes { get; set; }
         public DbSet<Avaria> Avarias { get; set; }
+        public DbSet<Mensagem> Mensagens { get; set; }
+        public DbSet<Vistoria> Vistorias { get; set; }
     }
 }

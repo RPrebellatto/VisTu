@@ -10,99 +10,99 @@ using VisTu.Models;
 
 namespace VisTu.Controllers
 {
-    public class TubulacoesController : Controller
+    public class MensagensController : Controller
     {
         private readonly Context _context;
 
-        public TubulacoesController(Context context)
+        public MensagensController(Context context)
         {
             _context = context;
         }
 
-        // GET: Tubulacoes
+        // GET: Mensagens
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Tubulacoes.ToListAsync());
+              return View(await _context.Mensagens.ToListAsync());
         }
 
-        // GET: Tubulacoes/Details/5
+        // GET: Mensagens/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tubulacoes == null)
+            if (id == null || _context.Mensagens == null)
             {
                 return NotFound();
             }
 
-            var tubulacao = await _context.Tubulacoes
+            var mensagem = await _context.Mensagens
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tubulacao == null)
+            if (mensagem == null)
             {
                 return NotFound();
             }
 
-            return View(tubulacao);
+            return View(mensagem);
         }
 
-        // GET: Tubulacoes/Create
+        // GET: Mensagens/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tubulacoes/Create
+        // POST: Mensagens/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeTubulacao")] Tubulacao tubulacao)
+        public async Task<IActionResult> Create([Bind("Id,Tipo,Titulo,TextoMensagem")] Mensagem mensagem)
         {
-           //if (ModelState.IsValid)
-           // {
-                _context.Add(tubulacao);
+            if (ModelState.IsValid)
+            {
+                _context.Add(mensagem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-           // }
-            //return View(tubulacao);
+            }
+            return View(mensagem);
         }
 
-        // GET: Tubulacoes/Edit/5
+        // GET: Mensagens/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Tubulacoes == null)
+            if (id == null || _context.Mensagens == null)
             {
                 return NotFound();
             }
 
-            var tubulacao = await _context.Tubulacoes.FindAsync(id);
-            if (tubulacao == null)
+            var mensagem = await _context.Mensagens.FindAsync(id);
+            if (mensagem == null)
             {
                 return NotFound();
             }
-            return View(tubulacao);
+            return View(mensagem);
         }
 
-        // POST: Tubulacoes/Edit/5
+        // POST: Mensagens/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeTubulacao")] Tubulacao tubulacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tipo,Titulo,TextoMensagem")] Mensagem mensagem)
         {
-            if (id != tubulacao.Id)
+            if (id != mensagem.Id)
             {
                 return NotFound();
             }
 
-           // if (ModelState.IsValid)
-           // {
+            if (ModelState.IsValid)
+            {
                 try
                 {
-                    _context.Update(tubulacao);
+                    _context.Update(mensagem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TubulacaoExists(tubulacao.Id))
+                    if (!MensagemExists(mensagem.Id))
                     {
                         return NotFound();
                     }
@@ -112,50 +112,50 @@ namespace VisTu.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-           // }
-           // return View(tubulacao);
+            }
+            return View(mensagem);
         }
 
-        // GET: Tubulacoes/Delete/5
+        // GET: Mensagens/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Tubulacoes == null)
+            if (id == null || _context.Mensagens == null)
             {
                 return NotFound();
             }
 
-            var tubulacao = await _context.Tubulacoes
+            var mensagem = await _context.Mensagens
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tubulacao == null)
+            if (mensagem == null)
             {
                 return NotFound();
             }
 
-            return View(tubulacao);
+            return View(mensagem);
         }
 
-        // POST: Tubulacoes/Delete/5
+        // POST: Mensagens/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Tubulacoes == null)
+            if (_context.Mensagens == null)
             {
-                return Problem("Entity set 'Context.Tubulacoes'  is null.");
+                return Problem("Entity set 'Context.Mensagens'  is null.");
             }
-            var tubulacao = await _context.Tubulacoes.FindAsync(id);
-            if (tubulacao != null)
+            var mensagem = await _context.Mensagens.FindAsync(id);
+            if (mensagem != null)
             {
-                _context.Tubulacoes.Remove(tubulacao);
+                _context.Mensagens.Remove(mensagem);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TubulacaoExists(int id)
+        private bool MensagemExists(int id)
         {
-          return _context.Tubulacoes.Any(e => e.Id == id);
+          return _context.Mensagens.Any(e => e.Id == id);
         }
     }
 }

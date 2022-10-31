@@ -59,14 +59,15 @@ namespace VisTu.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,NomeAvaria,Grau,Descricao,TubulacaoId")] Avaria avaria)
         {
-            if (ModelState.IsValid)
-            {
+          //  if (ModelState.IsValid)
+          //  {
                 _context.Add(avaria);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+           //   return RedirectToAction(nameof(Index));
+           // }
             ViewData["TubulacaoId"] = new SelectList(_context.Tubulacoes, "Id", "NomeTubulacao", avaria.TubulacaoId);
-            return View(avaria);
+            return RedirectToAction(nameof(Index));
+           // return View(avaria);
         }
 
         // GET: Avarias/Edit/5

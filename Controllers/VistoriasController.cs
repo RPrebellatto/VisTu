@@ -10,99 +10,104 @@ using VisTu.Models;
 
 namespace VisTu.Controllers
 {
-    public class TubulacoesController : Controller
+    public class VistoriasController : Controller
     {
         private readonly Context _context;
 
-        public TubulacoesController(Context context)
+        public VistoriasController(Context context)
         {
             _context = context;
         }
 
-        // GET: Tubulacoes
+        // GET: Vistorias
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Tubulacoes.ToListAsync());
+            var context = _context.Vistorias.Include(v => v.UsuarioVistoria);
+            return View(await context.ToListAsync());
         }
 
-        // GET: Tubulacoes/Details/5
+        // GET: Vistorias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Tubulacoes == null)
+            if (id == null || _context.Vistorias == null)
             {
                 return NotFound();
             }
 
-            var tubulacao = await _context.Tubulacoes
+            var vistoria = await _context.Vistorias
+                .Include(v => v.UsuarioVistoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tubulacao == null)
+            if (vistoria == null)
             {
                 return NotFound();
             }
 
-            return View(tubulacao);
+            return View(vistoria);
         }
 
-        // GET: Tubulacoes/Create
+        // GET: Vistorias/Create
         public IActionResult Create()
         {
+            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Email");
             return View();
         }
 
-        // POST: Tubulacoes/Create
+        // POST: Vistorias/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NomeTubulacao")] Tubulacao tubulacao)
+        public async Task<IActionResult> Create([Bind("Id,DataVistoria,UsuarioVistoriaId,DataReparo,Observação")] Vistoria vistoria)
         {
-           //if (ModelState.IsValid)
-           // {
-                _context.Add(tubulacao);
+            if (ModelState.IsValid)
+            {
+                _context.Add(vistoria);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-           // }
-            //return View(tubulacao);
+            }
+            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Email", vistoria.UsuarioVistoriaId);
+            return View(vistoria);
         }
 
-        // GET: Tubulacoes/Edit/5
+        // GET: Vistorias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Tubulacoes == null)
+            if (id == null || _context.Vistorias == null)
             {
                 return NotFound();
             }
 
-            var tubulacao = await _context.Tubulacoes.FindAsync(id);
-            if (tubulacao == null)
+            var vistoria = await _context.Vistorias.FindAsync(id);
+            if (vistoria == null)
             {
                 return NotFound();
             }
-            return View(tubulacao);
+            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Email", vistoria.UsuarioVistoriaId);
+            return View(vistoria);
         }
 
-        // POST: Tubulacoes/Edit/5
+        // POST: Vistorias/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NomeTubulacao")] Tubulacao tubulacao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,DataVistoria,UsuarioVistoriaId,DataReparo,Observação")] Vistoria vistoria)
         {
-            if (id != tubulacao.Id)
+            if (id != vistoria.Id)
             {
                 return NotFound();
             }
 
-           // if (ModelState.IsValid)
-           // {
+            if (ModelState.IsValid)
+            {
                 try
                 {
-                    _context.Update(tubulacao);
+                    _context.Update(vistoria);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TubulacaoExists(tubulacao.Id))
+                    if (!VistoriaExists(vistoria.Id))
                     {
                         return NotFound();
                     }
@@ -112,50 +117,52 @@ namespace VisTu.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-           // }
-           // return View(tubulacao);
+            }
+            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Email", vistoria.UsuarioVistoriaId);
+            return View(vistoria);
         }
 
-        // GET: Tubulacoes/Delete/5
+        // GET: Vistorias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Tubulacoes == null)
+            if (id == null || _context.Vistorias == null)
             {
                 return NotFound();
             }
 
-            var tubulacao = await _context.Tubulacoes
+            var vistoria = await _context.Vistorias
+                .Include(v => v.UsuarioVistoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (tubulacao == null)
+            if (vistoria == null)
             {
                 return NotFound();
             }
 
-            return View(tubulacao);
+            return View(vistoria);
         }
 
-        // POST: Tubulacoes/Delete/5
+        // POST: Vistorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Tubulacoes == null)
+            if (_context.Vistorias == null)
             {
-                return Problem("Entity set 'Context.Tubulacoes'  is null.");
+                return Problem("Entity set 'Context.Vistorias'  is null.");
             }
-            var tubulacao = await _context.Tubulacoes.FindAsync(id);
-            if (tubulacao != null)
+            var vistoria = await _context.Vistorias.FindAsync(id);
+            if (vistoria != null)
             {
-                _context.Tubulacoes.Remove(tubulacao);
+                _context.Vistorias.Remove(vistoria);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TubulacaoExists(int id)
+        private bool VistoriaExists(int id)
         {
-          return _context.Tubulacoes.Any(e => e.Id == id);
+          return _context.Vistorias.Any(e => e.Id == id);
         }
     }
 }

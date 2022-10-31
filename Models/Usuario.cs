@@ -13,6 +13,8 @@
         [Display(Name ="Setor")]
         public int SetorId { get; set; }
         public Setor Setor { get; set; }
+        public List<Vistoria>? Vistorias { get; set; }
+
         [StringLength(maximumLength: 128, MinimumLength = 3)]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "Favor informar a senha")]
