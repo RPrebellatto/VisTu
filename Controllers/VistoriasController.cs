@@ -22,7 +22,7 @@ namespace VisTu.Controllers
         // GET: Vistorias
         public async Task<IActionResult> Index()
         {
-            var context = _context.Vistorias.Include(v => v.UsuarioVistoria);
+            var context = _context.Vistorias.Include(v => v.Tubulacao).Include(v => v.UsuarioVistoria);
             return View(await context.ToListAsync());
         }
 
@@ -35,6 +35,7 @@ namespace VisTu.Controllers
             }
 
             var vistoria = await _context.Vistorias
+                .Include(v => v.Tubulacao)
                 .Include(v => v.UsuarioVistoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vistoria == null)
@@ -48,6 +49,7 @@ namespace VisTu.Controllers
         // GET: Vistorias/Create
         public IActionResult Create()
         {
+            ViewData["TubulacaoId"] = new SelectList(_context.Tubulacoes, "Id", "NomeTubulacao");
             ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Nome");
             return View();
         }
@@ -57,17 +59,18 @@ namespace VisTu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataVistoria,UsuarioVistoriaId,DataReparo,Observação")] Vistoria vistoria)
+        public async Task<IActionResult> Create([Bind("Id,TubulacaoId,DataVistoria,UsuarioVistoriaId,DataReparo,Observação")] Vistoria vistoria)
         {
-           // if (ModelState.IsValid)
-           // {
+            //if (ModelState.IsValid)
+            //{
                 _context.Add(vistoria);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-           // }
+               // return RedirectToAction(nameof(Index));
+            //}
+            ViewData["TubulacaoId"] = new SelectList(_context.Tubulacoes, "Id", "NomeTubulacao", vistoria.TubulacaoId);
             ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Nome", vistoria.UsuarioVistoriaId);
             // return View(vistoria);
-           // return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Vistorias/Edit/5
@@ -83,6 +86,7 @@ namespace VisTu.Controllers
             {
                 return NotFound();
             }
+            ViewData["TubulacaoId"] = new SelectList(_context.Tubulacoes, "Id", "NomeTubulacao", vistoria.TubulacaoId);
             ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Nome", vistoria.UsuarioVistoriaId);
             return View(vistoria);
         }
@@ -92,7 +96,7 @@ namespace VisTu.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataVistoria,UsuarioVistoriaId,DataReparo,Observação")] Vistoria vistoria)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,TubulacaoId,DataVistoria,UsuarioVistoriaId,DataReparo,Observação")] Vistoria vistoria)
         {
             if (id != vistoria.Id)
             {
@@ -117,10 +121,11 @@ namespace VisTu.Controllers
                         throw;
                     }
                 }
-            //    return RedirectToAction(nameof(Index));
+              //  return RedirectToAction(nameof(Index));
            // }
+            ViewData["TubulacaoId"] = new SelectList(_context.Tubulacoes, "Id", "NomeTubulacao", vistoria.TubulacaoId);
             ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Nome", vistoria.UsuarioVistoriaId);
-            // return View(vistoria);
+            //return View(vistoria);
             return RedirectToAction(nameof(Index));
         }
 
@@ -133,6 +138,7 @@ namespace VisTu.Controllers
             }
 
             var vistoria = await _context.Vistorias
+                .Include(v => v.Tubulacao)
                 .Include(v => v.UsuarioVistoria)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (vistoria == null)

@@ -11,6 +11,7 @@
         public string Descricao { get; set; }
         [Display(Name = "Tubulação")]
         public int TubulacaoId { get; set; }
+        [Display(Name = "Tubulação")]
         public Tubulacao Tubulacao { get; set; }
     }
 }
