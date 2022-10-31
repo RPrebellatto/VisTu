@@ -99,8 +99,8 @@ namespace VisTu.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+          //  if (ModelState.IsValid)
+           // {
                 try
                 {
                     _context.Update(avaria);
@@ -117,10 +117,11 @@ namespace VisTu.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
-            }
+             //   return RedirectToAction(nameof(Index));
+            //}
             ViewData["TubulacaoId"] = new SelectList(_context.Tubulacoes, "Id", "NomeTubulacao", avaria.TubulacaoId);
-            return View(avaria);
+            //return View(avaria);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Avarias/Delete/5

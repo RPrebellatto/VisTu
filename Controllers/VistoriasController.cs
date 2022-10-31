@@ -48,7 +48,7 @@ namespace VisTu.Controllers
         // GET: Vistorias/Create
         public IActionResult Create()
         {
-            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Email");
+            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Nome");
             return View();
         }
 
@@ -59,14 +59,15 @@ namespace VisTu.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,DataVistoria,UsuarioVistoriaId,DataReparo,Observação")] Vistoria vistoria)
         {
-            if (ModelState.IsValid)
-            {
+           // if (ModelState.IsValid)
+           // {
                 _context.Add(vistoria);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Email", vistoria.UsuarioVistoriaId);
-            return View(vistoria);
+           // }
+            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Nome", vistoria.UsuarioVistoriaId);
+            // return View(vistoria);
+           // return RedirectToAction(nameof(Index));
         }
 
         // GET: Vistorias/Edit/5
@@ -82,7 +83,7 @@ namespace VisTu.Controllers
             {
                 return NotFound();
             }
-            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Email", vistoria.UsuarioVistoriaId);
+            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Nome", vistoria.UsuarioVistoriaId);
             return View(vistoria);
         }
 
@@ -98,8 +99,8 @@ namespace VisTu.Controllers
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+           // if (ModelState.IsValid)
+           // {
                 try
                 {
                     _context.Update(vistoria);
@@ -116,10 +117,11 @@ namespace VisTu.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Email", vistoria.UsuarioVistoriaId);
-            return View(vistoria);
+            //    return RedirectToAction(nameof(Index));
+           // }
+            ViewData["UsuarioVistoriaId"] = new SelectList(_context.Usuarios, "Id", "Nome", vistoria.UsuarioVistoriaId);
+            // return View(vistoria);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Vistorias/Delete/5

@@ -44,7 +44,7 @@ namespace VisTu.Migrations
 
                     b.HasIndex("TubulacaoId");
 
-                    b.ToTable("Avarias");
+                    b.ToTable("Avarias", (string)null);
                 });
 
             modelBuilder.Entity("VisTu.Models.Mensagem", b =>
@@ -67,7 +67,7 @@ namespace VisTu.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Mensagens");
+                    b.ToTable("Mensagens", (string)null);
                 });
 
             modelBuilder.Entity("VisTu.Models.Setor", b =>
@@ -87,7 +87,7 @@ namespace VisTu.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Setores");
+                    b.ToTable("Setores", (string)null);
                 });
 
             modelBuilder.Entity("VisTu.Models.Tubulacao", b =>
@@ -102,7 +102,7 @@ namespace VisTu.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tubulacoes");
+                    b.ToTable("Tubulacoes", (string)null);
                 });
 
             modelBuilder.Entity("VisTu.Models.Usuario", b =>
@@ -138,7 +138,7 @@ namespace VisTu.Migrations
 
                     b.HasIndex("SetorId");
 
-                    b.ToTable("Usuarios");
+                    b.ToTable("Usuarios", (string)null);
                 });
 
             modelBuilder.Entity("VisTu.Models.Vistoria", b =>
@@ -168,7 +168,7 @@ namespace VisTu.Migrations
 
                     b.HasIndex("UsuarioVistoriaId");
 
-                    b.ToTable("Vistorias");
+                    b.ToTable("Vistorias", (string)null);
                 });
 
             modelBuilder.Entity("VisTu.Models.Avaria", b =>
