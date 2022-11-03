@@ -13,7 +13,7 @@ namespace VisTu.Controllers
     public class AvariasController : Controller
     {
         private readonly Context _context;
-
+        //comentario
         public AvariasController(Context context)
         {
             _context = context;
