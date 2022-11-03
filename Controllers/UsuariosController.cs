@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +14,14 @@ namespace VisTu.Controllers
     public class UsuariosController : Controller
     {
         private readonly Context _context;
+        private readonly VisTuContext _context2;
 
-        public UsuariosController(Context context)
+        public UsuariosController(VisTuContext context)
         {
-            _context = context;
+            _context2 = context;
         }
 
+        [Authorize(Policy = "RequireAdmin")]
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
